@@ -7,12 +7,12 @@ import {Column} from "@/shared/api";
 
 type ColumnTasksProps = {
   isDroppable?: boolean
-  newTask: (title: string) => void
+  newTask?: (title: string) => void
 } & Column
 
-const ColumnTasks = ({ list, title, isDroppable, newTask }: ColumnTasksProps) => {
+const ColumnTasks = ({ list, title, isDroppable, newTask, id }: ColumnTasksProps) => {
   return (
-    <Droppable droppableId={title}>
+    <Droppable droppableId={id.toString()}>
       {provided => (
         <div className={styles.column}>
           <h2>{title}</h2>

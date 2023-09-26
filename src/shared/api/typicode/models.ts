@@ -5,8 +5,9 @@ export type Task = {
 };
 
 export type Column = {
+  id?: number;
   title?: string;
-  list?: [Task];
+  list?: Task[];
 }
 
 export type TaskAction = {
@@ -15,5 +16,5 @@ export type TaskAction = {
 }
 
 export type TasksState = {
-  tasks: [Task]
+  tasks: Task[]
 }

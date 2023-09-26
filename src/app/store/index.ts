@@ -1,8 +1,8 @@
 import {createStore, combineReducers} from "redux";
-import {taskReducer} from "@/entities/task/model";
+// import {taskReducer} from "@/entities/task/model";
 
 const rootReducer = combineReducers({
-  taskReducer
+  // taskReducer
 })
 
 export const store = createStore(rootReducer)

@@ -23,7 +23,7 @@ const TaskRow = ({ title, index, id }: TaskRowProps) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              {index + 1}. {title}
+              {title}
             </div>
           )
         }

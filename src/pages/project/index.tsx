@@ -1,70 +1,60 @@
 import styles from './styles.module.scss'
 import {DragDropContext, DropResult} from 'react-beautiful-dnd'
-import {useState} from "react";
+import React, {useState} from "react";
 import {ColumnTasks} from "@/widgets/column-tasks";
 
 const Project = () => {
-  const initialColumns = {
-    Queue: {
-      id: 'Queue',
-      list: [{title: 'item 2', id: 1}, {title: 'item 2', id: 2}, {title: 'item 3', id: 3}]
+  const initialColumns = [
+    {
+      id: 0,
+      title: 'Queue',
+      list: [{title: '0', id: 0}, {title: '1', id: 1}]
     },
-    Development: {
-      id: 'Development',
-      list: []
+    {
+      id: 1,
+      title: 'Development',
+      list: [{title: '2', id: 2}]
     },
-    Done: {
-      id: 'Done',
+    {
+      id: 3,
+      title: 'Done',
       list: []
     }
-  }
+  ]
   const [columns, setColumns] = useState(initialColumns)
   const [droppableId, setDroppableId] = useState("")
 
   const onDragEnd = ({source, destination}: DropResult) => {
     setDroppableId("")
 
-    if (destination === undefined || destination === null) return
+    if (!destination) return
     if (source.droppableId === destination.droppableId && destination.index === source.index) return
 
-    const start = columns[source.droppableId]
-    const end = columns[destination.droppableId]
+    const start_index = columns.findIndex(col => col.id.toString() == source.droppableId)
+    const end_index = columns.findIndex(col => col.id.toString() == destination.droppableId)
+
+    const start = columns[start_index]
+    const end = columns[end_index]
+
+    const newColumns = structuredClone(columns)
 
     if (start === end) {
       const newList = start.list.filter((_: never, idx: number) => idx !== source.index)
 
       newList.splice(destination.index, 0, start.list[source.index])
-
-      const newCol = {
-        id: start.id,
-        list: newList
-      }
-
-      setColumns(state => ({...state, [newCol.id]: newCol}))
-      return null
-    } else {
+      newColumns[start_index] = {...start, list: newList}
+      setColumns(state => newColumns)
+    }
+    else {
       const newStartList = start.list.filter((_: never, idx: number) => idx !== source.index)
-
-      const newStartCol = {
-        id: start.id,
-        list: newStartList
-      }
-
       const newEndList = end.list
 
       newEndList.splice(destination.index, 0, start.list[source.index])
 
-      const newEndCol = {
-        id: end.id,
-        list: newEndList
-      }
+      newColumns[start_index] = {...start, list: newStartList}
+      newColumns[end_index] = {...end, list: newEndList}
 
-      setColumns(state => ({
-        ...state,
-        [newStartCol.id]: newStartCol,
-        [newEndCol.id]: newEndCol
-      }))
-      return null
+      setColumns(state => newColumns)
     }
   }
 
@@ -75,13 +65,17 @@ const Project = () => {
   return (
     <DragDropContext onDragUpdate={onDragUpdate} onDragEnd={onDragEnd}>
       <div className={styles.columns}>
-        {Object.values(columns).map(col => (
-          <ColumnTasks
-            isDroppable={col.id == droppableId}
-            title={col.id}
-            list={col.list}
-            key={col.id}/>
-        ))}
+        {
+          columns.map(col => (
+            <ColumnTasks
+              title={col.title}
+              list={col.list}
+              key={col.id}
+              id={col.id}
+              isDroppable={col.id.toString() === droppableId}
+            />
+          ))
+        }
       </div>
     </DragDropContext>
   )
