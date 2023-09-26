@@ -1,0 +1,21 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid burlywood;
+  border-radius: 5px;
+}
+
+.isDroppable {
+  background: #efefef;
+}
+
+.taskList {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  min-height: 400px;
+}
