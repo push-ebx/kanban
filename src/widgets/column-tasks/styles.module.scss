@@ -16,6 +16,10 @@
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  //row-gap: 1rem;
   min-height: 400px;
+}
+
+.newTask_btn {
+  transition: transform .8s ease-out !important;
 }

@@ -2,15 +2,29 @@ import {TaskRow} from '@/entities/task'
 import {Droppable} from 'react-beautiful-dnd'
 import styles from './styles.module.scss'
 import cn from "classnames"
-import {Button} from "@/shared/ui/button";
 import {Column} from "@/shared/api";
+import {useDispatch} from "react-redux";
+import {addTask} from "@/entities/task/model/actionCreators.ts";
+import React, {useRef, useState} from "react";
+import {Input} from "@/shared/ui/input";
 
 type ColumnTasksProps = {
   isDroppable?: boolean
   newTask?: (title: string) => void
 } & Column
 
-const ColumnTasks = ({ list, title, isDroppable, newTask, id }: ColumnTasksProps) => {
+const ColumnTasks = ({ list, title, isDroppable, id }: ColumnTasksProps) => {
+  const dispatch = useDispatch()
+  const taskInput = useRef<HTMLInputElement>(null)
+  const [newTaskTitle, setNewTaskTitle] = useState("")
+
+  const handleNewTask = (e) => {
+    if (e.key === 'Enter' || e.code === 'NumpadEnter') {
+      dispatch(addTask(id, newTaskTitle))
+      setNewTaskTitle("")
+    }
+  }
+
   return (
     <Droppable droppableId={id.toString()}>
       {provided => (
@@ -22,10 +36,16 @@ const ColumnTasks = ({ list, title, isDroppable, newTask, id }: ColumnTasksProps
             className={cn(styles.taskList, { [styles.isDroppable]: isDroppable })}
           >
             {list.map((task, index) => (
-              <TaskRow key={task.id} id={task.id} title={task.title} index={index} />
+              task && <TaskRow droppableId={id} key={task.id} index={index} />
             ))}
             {provided.placeholder}
-            <Button onClick={() => newTask(title)}>+ New</Button>
+            <Input
+              placeholder={"New task"}
+              inputRef={taskInput}
+              onKeyDownHandler={e => handleNewTask(e)}
+              value={newTaskTitle}
+              onChange={setNewTaskTitle}
+            />
           </div>
         </div>
       )}

@@ -2,60 +2,20 @@ import styles from './styles.module.scss'
 import {DragDropContext, DropResult} from 'react-beautiful-dnd'
 import React, {useState} from "react";
 import {ColumnTasks} from "@/widgets/column-tasks";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/app/store";
+import {dragTask} from "@/entities/task/model/actionCreators.ts";
 
 const Project = () => {
-  const initialColumns = [
-    {
-      id: 0,
-      title: 'Queue',
-      list: [{title: '0', id: 0}, {title: '1', id: 1}]
-    },
-    {
-      id: 1,
-      title: 'Development',
-      list: [{title: '2', id: 2}]
-    },
-    {
-      id: 3,
-      title: 'Done',
-      list: []
-    }
-  ]
-  const [columns, setColumns] = useState(initialColumns)
+  const columns = useSelector((state: RootState) => state.taskReducer.columns)
+  const _ = useSelector((state: RootState) => state.taskReducer)
+  const dispatch = useDispatch()
   const [droppableId, setDroppableId] = useState("")
+
 
   const onDragEnd = ({source, destination}: DropResult) => {
     setDroppableId("")
-
-    if (!destination) return
-    if (source.droppableId === destination.droppableId && destination.index === source.index) return
-
-    const start_index = columns.findIndex(col => col.id.toString() == source.droppableId)
-    const end_index = columns.findIndex(col => col.id.toString() == destination.droppableId)
-
-    const start = columns[start_index]
-    const end = columns[end_index]
-
-    const newColumns = structuredClone(columns)
-
-    if (start === end) {
-      const newList = start.list.filter((_: never, idx: number) => idx !== source.index)
-
-      newList.splice(destination.index, 0, start.list[source.index])
-      newColumns[start_index] = {...start, list: newList}
-      setColumns(state => newColumns)
-    }
-    else {
-      const newStartList = start.list.filter((_: never, idx: number) => idx !== source.index)
-      const newEndList = end.list
-
-      newEndList.splice(destination.index, 0, start.list[source.index])
-
-      newColumns[start_index] = {...start, list: newStartList}
-      newColumns[end_index] = {...end, list: newEndList}
-
-      setColumns(state => newColumns)
-    }
+    dispatch(dragTask(source, destination))
   }
 
   const onDragUpdate = ({destination}: DropResult) => {

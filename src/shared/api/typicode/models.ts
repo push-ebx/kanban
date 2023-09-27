@@ -1,7 +1,11 @@
+import {DraggableLocation} from "react-beautiful-dnd";
+
 export type Task = {
   id?: number;
   title?: string;
-  completed?: boolean;
+  description?: string;
+  date_create?: string;
+  subtasks?: Task[];
 };
 
 export type Column = {
@@ -10,11 +14,14 @@ export type Column = {
   list?: Task[];
 }
 
-export type TaskAction = {
+export type ColumnAction = {
   type: string;
-  task: Task
-}
+  column?: Column;
+  source?:  DraggableLocation;
+  destination?: DraggableLocation;
+} & Column
 
-export type TasksState = {
-  tasks: Task[]
+export type ColumnState = {
+  columns: Column[];
+  count_tasks: number;
 }
