@@ -1,1 +1,1 @@
-[Ссылка на проект](https://)
+[Ссылка на проект](https://kanban-two-taupe.vercel.app/)
