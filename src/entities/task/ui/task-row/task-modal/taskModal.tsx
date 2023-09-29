@@ -18,6 +18,7 @@ type Props = {
   handleChangeDescriptionTask: (value: string) => void,
   handleNewSubtask: (value, subtask: string) => void,
   handleDeleteTask: () => void,
+  handleDeleteSubtask: (i: number) => void,
   index_column: number,
   index_task: number,
 }
