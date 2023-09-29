@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import style from './style.module.scss'
-import { Button } from '../button';
 import CrossIcon from "./x.svg"
 
 type Props = {

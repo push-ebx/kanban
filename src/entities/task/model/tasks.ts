@@ -138,6 +138,23 @@ const taskReducer = (
 
       return {...state}
     }
+    case actionTypes.DELETE_TASK: {
+      const {droppableId, index} = action
+      const tasksCopy = structuredClone(state.columns[droppableId].list)
+      tasksCopy.splice(index, 1)
+      state.columns[droppableId].list = tasksCopy;
+
+      return {...state}
+    }
+
+    case actionTypes.DELETE_SUBTASK: {
+      const {droppableId, index, subtask_index} = action
+      const taskCopy = structuredClone(state.columns[droppableId].list[index])
+      taskCopy.subtasks.splice(subtask_index, 1)
+      state.columns[droppableId].list[index] = taskCopy;
+
+      return {...state}
+    }
   }
 
   return state

@@ -9,7 +9,7 @@ import {
   addSubtask,
   changeDescriptionTask,
   changePriorityTask,
-  changeTitleTask
+  changeTitleTask, deleteSubTask, deleteTask
 } from "@/entities/task/model/actionCreators.ts";
 import {Priority} from "@/shared/ui/priority";
 import {Subtask} from "@/shared/ui/subtask/subtask.tsx";
@@ -57,14 +57,14 @@ const TaskRow = ({droppableId, index}: TaskRowProps) => {
                 <div className={styles.titleTask}>
                   {task.titleTask}
                 </div>
-                {
-                  !!task.subtasks.length &&
-                  <div className={styles.subtasks}>
                   {
-                    task.subtasks.map(subtask => <Subtask text={subtask.text}/>)
+                    !!task.subtasks.length &&
+                    <div className={styles.subtasks}>
+                      {
+                        task.subtasks.map(subtask => <Subtask text={subtask.text} />)
+                      }
+                    </div>
                   }
-                </div>
-                }
               </div>
             )
           }
@@ -81,6 +81,8 @@ const TaskRow = ({droppableId, index}: TaskRowProps) => {
         handleNewSubtask={handleNewSubtask}
         index_task={index}
         index_column={droppableId}
+        handleDeleteTask={() => dispatch(deleteTask(droppableId, index))}
+        handleDeleteSubtask={subtask_index => dispatch(deleteSubTask(droppableId, index, subtask_index))}
       />
     </>
   )

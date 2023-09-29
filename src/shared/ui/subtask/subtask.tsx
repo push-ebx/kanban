@@ -1,8 +1,8 @@
 import styles from './styles.module.scss'
 
-const Subtask = ({text}) => {
+const Subtask = ({text, onclick}) => {
   return (
-    <div className={styles.subtask}>
+    <div onClick={onclick} className={styles.subtask}>
       {text}
     </div>
   );

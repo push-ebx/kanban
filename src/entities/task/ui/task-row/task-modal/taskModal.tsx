@@ -3,7 +3,7 @@ import {Modal} from "@/shared/ui/modal";
 import {Task} from "@/shared/api";
 import moment from "moment";
 import {Input} from "@/shared/ui/input";
-import {Comments, Index} from "@/entities/task/ui/task-row/task-comment";
+import {Comments} from "@/entities/task/ui/task-row/task-comment";
 import {Subtask} from "@/shared/ui/subtask/subtask.tsx";
 import styles from "./styles.module.scss"
 
@@ -17,6 +17,7 @@ type Props = {
   handleChangeTitleTask: (value: string) => void,
   handleChangeDescriptionTask: (value: string) => void,
   handleNewSubtask: (value, subtask: string) => void,
+  handleDeleteTask: () => void,
   index_column: number,
   index_task: number,
 }
@@ -24,12 +25,14 @@ type Props = {
 export const TaskModal = ({handleChangeDescriptionTask,
                             handleChangeTitleTask,
                             handleChangePriority,
+                            handleDeleteTask,
                             setModalActive,
                             modalActive,
                             task,
                             index_column,
                             index_task,
-                            handleNewSubtask
+                            handleNewSubtask,
+                            handleDeleteSubtask
                           }: Props) => {
 
   const [subtask, setSubtask] = useState('')
@@ -79,9 +82,15 @@ export const TaskModal = ({handleChangeDescriptionTask,
         </select>
       </div>
 
+      <div className={styles.delete} onClick={handleDeleteTask}>Delete task</div>
+
       <div className={styles.subtasks}>
         {
-          task.subtasks.map((sub, i) => <Subtask key={i} text={sub.text} />)
+          task.subtasks.map((sub, i) => <Subtask
+            key={i}
+            text={sub.text}
+            onclick={() => handleDeleteSubtask(i)}
+          />)
         }
       </div>
 

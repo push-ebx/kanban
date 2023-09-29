@@ -50,7 +50,8 @@ export type SubtaskAction = {
   type: string;
   droppableId,
   index,
-  subtask
+  subtask,
+  subtask_index
 }
 
 export type ColumnState = {

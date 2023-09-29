@@ -77,3 +77,24 @@ export const addSubtask = (droppableId, index, subtask) => {
 
   return action
 }
+
+export const deleteTask = (droppableId, index) => {
+  const action: SubtaskAction = {
+    type: actionTypes.DELETE_TASK,
+    droppableId,
+    index
+  }
+
+  return action
+}
+
+export const deleteSubTask = (droppableId, index, subtask_index) => {
+  const action: SubtaskAction = {
+    type: actionTypes.DELETE_SUBTASK,
+    droppableId,
+    index,
+    subtask_index
+  }
+
+  return action
+}
