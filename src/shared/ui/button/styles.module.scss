@@ -1,12 +1,10 @@
-@import "@/app/styles/vars";
-
 .button {
   display: flex;
   align-items: center;
   cursor: pointer;
   padding: 0.5rem;
   background-color: transparent;
-  color: $text-color;
+  color: #383838;
   border-radius: 3px;
   border: 1px solid red;
   user-select: none;

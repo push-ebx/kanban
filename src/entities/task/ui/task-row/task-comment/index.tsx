@@ -3,6 +3,7 @@ import {Comment} from "@/shared/api";
 import {useDispatch} from "react-redux";
 import {addComment} from "@/entities/task/model/actionCreators.ts";
 import {Input} from "@/shared/ui/input";
+import styles from "./styles.module.scss"
 
 type CommentProps = {
   index_column: number;
@@ -15,20 +16,30 @@ const Comments = ({index_column, index_task, id, text, children } : CommentProps
   const [inputValue, setInputValue] = useState('')
 
   return (
-    <div style={{marginLeft: 20, borderLeft: '1px white solid', paddingLeft: 5}}>
-      <div>{text}</div>
-      <button onClick={() => {
-        setIsReply(prev => !prev)
-      }}
-      >
-        {isReply ? 'Cancel': 'Add comment'}
-      </button>
+    <div className={styles.comments}>
+      <div className={styles.add_btn_text}>
+        <div>{text}</div>
+        <button
+          className={styles.button}
+          onClick={() => {
+            setIsReply(prev => !prev)
+          }}
+        >
+          {isReply ? 'Cancel': 'Add comment'}
+        </button>
+      </div>
 
       {
         isReply &&
-        <div>
-          <Input value={inputValue} placeholder={"Comment..."} onChange={setInputValue}/>
+        <div className={styles.newComment}>
+          <Input
+            className={styles.input}
+            value={inputValue}
+            placeholder={"Comment..."}
+            onChange={setInputValue}
+          />
           <button
+            className={styles.button}
             onClick={() => {
               if (!inputValue.trim()) return
 

@@ -3,8 +3,9 @@ import {Modal} from "@/shared/ui/modal";
 import {Task} from "@/shared/api";
 import moment from "moment";
 import {Input} from "@/shared/ui/input";
-import {Comments} from "@/entities/task/ui/task-row/comments.tsx";
-import {Subtask} from "@/entities/task/ui/task-row/subtask.tsx";
+import {Comments, Index} from "@/entities/task/ui/task-row/task-comment";
+import {Subtask} from "@/shared/ui/subtask/subtask.tsx";
+import styles from "./styles.module.scss"
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
 
@@ -38,45 +39,51 @@ export const TaskModal = ({handleChangeDescriptionTask,
       handleClickClose={() => setModalActive(false)}
       handleClickOk={() => {}}
       active={modalActive}
-      title={"title"}
+      title={`Task ${task.id}`}
+      className={styles.modal}
     >
       <Input
         value={task.titleTask}
         placeholder={"Task"}
         onChange={value => handleChangeTitleTask(value)}
+        className={styles.input}
       />
-      <Input
+      <textarea
         value={task.description}
         placeholder={"Description"}
-        onChange={value => handleChangeDescriptionTask(value)}
+        onChange={e => {
+          handleChangeDescriptionTask(e.target.value)
+        }}
+        className={styles.description}
       />
-      <div>Номер задачи: {task.id + 1}</div>
-      <div>Дата и время создания: {task.date_create}</div>
-      <div>Время в работе: {moment(task.date_create, "DD.MM.YY hh:mm a").fromNow()}</div>
-      <div>Текущий статус: {task.status}</div>
+      <div className={styles.property}>Date and time of creation:
+        <span>{task.date_create}</span>
+      </div>
+      <div className={styles.property}>Working time:
+        <span>{moment(task.date_create, "DD.MM.YY hh:mm a").fromNow()}</span>
+      </div>
+      <div className={styles.property}>Current status:
+        <span>{task.status}</span>
+      </div>
 
-      <label htmlFor="priority-select">Приоритет: </label>
-      <select
-        name="prioritets"
-        id="priority-select"
-        onChange={e => handleChangePriority(e.target.value)}
-      >
-        <option selected={task.priority === "Low"} value="low">Low</option>
-        <option selected={task.priority === "Medium"} value="medium">Medium</option>
-        <option selected={task.priority === "Height"} value="height">Height</option>
-      </select>
+      <div className={styles.priority}>
+        <label className={styles.property} htmlFor="priority-select">Priority: </label>
+        <select
+          name="prioritets"
+          id="priority-select"
+          onChange={e => handleChangePriority(e.target.value)}
+        >
+          <option selected={task.priority === "Low"} value="Low">Low</option>
+          <option selected={task.priority === "Medium"} value="Medium">Medium</option>
+          <option selected={task.priority === "Height"} value="Height">Height</option>
+        </select>
+      </div>
 
-      <Comments
-        index_column={index_column}
-        index_task={index_task}
-        id={task.comments.id}
-        children={task.comments.children}
-        text={task.comments.text}
-      />
-
-      {
-        task.subtasks.map((sub, i) => <Subtask key={i} text={sub.text} />)
-      }
+      <div className={styles.subtasks}>
+        {
+          task.subtasks.map((sub, i) => <Subtask key={i} text={sub.text} />)
+        }
+      </div>
 
       <Input
         value={subtask}
@@ -86,6 +93,14 @@ export const TaskModal = ({handleChangeDescriptionTask,
           (e.key === 'Enter' || e.code === 'NumpadEnter') && setSubtask("");
         }}
         placeholder={"New subtask"}
+      />
+
+      <Comments
+        index_column={index_column}
+        index_task={index_task}
+        id={task.comments.id}
+        children={task.comments.children}
+        text={task.comments.text}
       />
     </Modal>
   )

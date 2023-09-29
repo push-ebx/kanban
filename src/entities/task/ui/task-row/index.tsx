@@ -2,9 +2,7 @@ import React, {useState} from 'react'
 import {Draggable} from 'react-beautiful-dnd'
 import styles from './styles.module.scss'
 import cn from "classnames"
-import external_link from './external-link.png'
-import {IconButton} from "@/shared/ui/iconButton";
-import {TaskModal} from "@/entities/task/ui/task-row/task-modal.tsx";
+import {TaskModal} from "@/entities/task/ui/task-row/task-modal/taskModal.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/app/store";
 import {
@@ -13,6 +11,8 @@ import {
   changePriorityTask,
   changeTitleTask
 } from "@/entities/task/model/actionCreators.ts";
+import {Priority} from "@/shared/ui/priority";
+import {Subtask} from "@/shared/ui/subtask/subtask.tsx";
 
 type TaskRowProps = {
   index: number;
@@ -48,9 +48,23 @@ const TaskRow = ({droppableId, index}: TaskRowProps) => {
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
+                onClick={() => setModalActive(true)}
               >
-                {task.titleTask}
-                <IconButton src={external_link} onClick={() => setModalActive(true)}/>
+                <div className={styles.topbar}>
+                  <Priority priority={task.priority}/>
+                  <div className={styles.date}>{task.date_create}</div>
+                </div>
+                <div className={styles.titleTask}>
+                  {task.titleTask}
+                </div>
+                {
+                  !!task.subtasks.length &&
+                  <div className={styles.subtasks}>
+                  {
+                    task.subtasks.map(subtask => <Subtask text={subtask.text}/>)
+                  }
+                </div>
+                }
               </div>
             )
           }

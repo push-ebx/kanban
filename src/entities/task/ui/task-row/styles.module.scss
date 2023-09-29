@@ -1,14 +1,50 @@
 .taskRow {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid yellow;
-  // transition: background-color .8s ease-out;
+  padding: .8rem;
+  -webkit-box-shadow: 0px 4px 31px -5px rgba(34, 60, 80, 0.15);
+  -moz-box-shadow: 0px 4px 31px -5px rgba(34, 60, 80, 0.15);
+  box-shadow: 0px 4px 31px -5px rgba(34, 60, 80, 0.15);
   border-radius: 5px;
-  margin: 0.5rem 0;
-
-
+  margin: 0.4rem 0;
+  transition: box-shadow 0.1s ease-out;
+  user-select: none;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  row-gap: .7rem;
 }
 
 .isDraggable {
-  background-color: cyan;
+  -webkit-box-shadow: 0px 1px 15px 11px rgba(11, 127, 216, 0.14);
+  -moz-box-shadow: 0px 1px 15px 11px rgba(11, 127, 216, 0.14);
+  box-shadow: 0px 1px 15px 11px rgba(11, 127, 216, 0.14);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+
+  .date {
+    border-radius: 3px;
+    width: auto;
+    font-size: 0.6rem;
+    background-color: rgba(180, 180, 180, 0.12);
+    color: #b4b4b4;
+    padding: 0.2rem 0.4rem;
+    font-weight: 400;
+  }
+}
+
+.titleTask {
+  font-size: 1rem;
+  color: #383838;
+}
+
+.subtasks {
+  display: flex;
+  column-gap: 0.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

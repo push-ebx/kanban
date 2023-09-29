@@ -21,11 +21,11 @@ export const Modal = ({className,
 
   return (
     <div
-      className={`${style.modal} ${className} ${active ? style.active : ''}`}
+      className={`${style.modal} ${active ? style.active : ''}`}
       onClick={() => handleClickClose()}
     >
       <div
-        className={style.content}
+        className={`${style.content}`}
         onClick={(e) => e.stopPropagation()}
       >
         <header>
@@ -36,12 +36,9 @@ export const Modal = ({className,
             onClick={() => handleClickClose()}
           />
         </header>
-        <div>
+        <div className={className}>
           {children}
         </div>
-        <nav>
-          <Button onClick={() => handleClickOk()}>Ок</Button>
-        </nav>
       </div>
     </div>
   );

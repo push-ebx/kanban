@@ -1,0 +1,44 @@
+.comments {
+  margin-left: 1rem;
+  border-left: 1px #383838 solid;
+  padding-left: .25rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  font-size: 0.7rem;
+}
+
+.button {
+  outline: none;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0;
+  color: #FFF;
+  background-color: #383838;
+  cursor: pointer;
+  transition: background-color .15s ease-out;
+  font-size: 0.6rem;
+  width: 5rem;
+
+  &:hover {
+    color: #595959;
+    background-color: #414141;
+  }
+}
+
+.input {
+  height: auto;
+  padding: 0.3rem;
+  font-size: 0.6rem;
+  text-align: left;
+}
+
+.newComment {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.add_btn_text {
+  display: flex;
+  column-gap: .5rem;
+}

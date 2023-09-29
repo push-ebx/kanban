@@ -31,7 +31,7 @@ const ColumnTasks = ({ list, title, isDroppable, id }: ColumnTasksProps) => {
     <Droppable droppableId={id.toString()}>
       {provided => (
         <div className={styles.column}>
-          <h2>{title}</h2>
+          <h4 className={styles.title}>{title}</h4>
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
@@ -41,14 +41,16 @@ const ColumnTasks = ({ list, title, isDroppable, id }: ColumnTasksProps) => {
               task && <TaskRow droppableId={id} key={task.id} index={index} />
             ))}
             {provided.placeholder}
-            <Input
-              placeholder={"New task"}
-              inputRef={taskInput}
-              onKeyDownHandler={e => handleNewTask(e)}
-              value={newTaskTitle}
-              onChange={setNewTaskTitle}
-            />
+
           </div>
+          <Input
+            className={styles.newTask}
+            placeholder={"+ Add task"}
+            inputRef={taskInput}
+            onKeyDownHandler={e => handleNewTask(e)}
+            value={newTaskTitle}
+            onChange={setNewTaskTitle}
+          />
         </div>
       )}
     </Droppable>

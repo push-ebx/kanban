@@ -1,5 +1,3 @@
-@import "@/app/styles/vars";
-
 .loader {
   display: inline-block;
   position: relative;
@@ -15,7 +13,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: $text-color;
+  background: #383838;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 

@@ -1,7 +1,15 @@
 .columns {
+  position: absolute;
   display: flex;
-  //border: 1px solid black;
   justify-content: center;
-  column-gap: 2rem;
+  column-gap: 1.5rem;
   align-items: flex-start;
+  height: 100%;
+  padding: 1rem;
+  width: 100%;
+  overflow-x: auto;
+
+  @media screen and (max-width: 1000px) {
+    width: auto;
+  }
 }
