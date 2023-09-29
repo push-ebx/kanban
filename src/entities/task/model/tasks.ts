@@ -3,69 +3,32 @@ import * as actionTypes from "./actionTypes"
 import moment from "moment";
 
 const comment: Comment = { id: '', children: []}
-// const comment: Comment = {
-//   text: "main",
-//   id: '',
-//   children: [
-//     {
-//       id: '0',
-//       text: "name1",
-//       children: [
-//         {
-//           id: '0.0',
-//           text: "name1.1",
-//           children: []
-//         }
-//       ]
-//     },
-//     {
-//       id: '1',
-//       text: "name2",
-//       children: []
-//     },
-//     {
-//       id: '2',
-//       text: "name3",
-//       children: [
-//         {
-//           id: '2.0',
-//           text: "name3.1",
-//           children: [
-//             {
-//               id: '2.0.0',
-//               text: "name3.1.1",
-//               children: []
-//             },
-//           ]
-//         }
-//       ]
-//     },
-//   ]
-// }
+const loadState = () => {
+  try {
+    const serialState = localStorage.getItem('appState');
+    if (serialState === null) {
+      return undefined;
+    }
+
+    return JSON.parse(JSON.parse(serialState)).taskReducer;
+  } catch (err) {
+    return undefined;
+  }
+};
+
+const persistedState = loadState();
 
 const initialState: ColumnState = {
   columns: [
     {
       id: 0,
       title: 'Queue',
-      list: [
-        {
-          titleTask: 'Task 1',
-          id: 0,
-          date_create: '01.07.2023 02:43 am',
-          description: "task 01 blabla",
-          subtasks:[],
-          comments: comment
-        },
-        {titleTask: 'Task 2', id: 1, date_create: '02.08.2023 05:43 pm', description: "task 02 blabla", subtasks:[], comments: comment}
-      ]
+      list: []
     },
     {
       id: 1,
       title: 'Development',
-      list: [
-        {titleTask: 'Task 3', id: 2, date_create: '03.09.2023 05:43 am', description: "task 03 blabla", subtasks:[], comments: comment}
-      ]
+      list: []
     },
     {
       id: 2,
@@ -73,7 +36,8 @@ const initialState: ColumnState = {
       list: []
     }
   ],
-  count_tasks: 3
+  count_tasks: 0,
+  ...persistedState
 }
 
 const taskReducer = (
@@ -115,11 +79,10 @@ const taskReducer = (
     case actionTypes.ADD_TASK: {
       const {id, titleTask, status} = action
 
-      state.count_tasks++
       state.columns[id].list.push({
         titleTask,
         status,
-        id: state.count_tasks,
+        id: state.count_tasks++,
         description: '',
         date_create: moment().format("DD.MM.YY hh:mm a"),
         subtasks: [],
@@ -176,6 +139,7 @@ const taskReducer = (
       return {...state}
     }
   }
+
   return state
 }
 

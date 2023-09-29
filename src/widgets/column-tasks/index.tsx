@@ -20,6 +20,8 @@ const ColumnTasks = ({ list, title, isDroppable, id }: ColumnTasksProps) => {
 
   const handleNewTask = (e) => {
     if (e.key === 'Enter' || e.code === 'NumpadEnter') {
+      if (!newTaskTitle.trim()) return
+
       dispatch(addTask(id, newTaskTitle, title))
       setNewTaskTitle("")
     }

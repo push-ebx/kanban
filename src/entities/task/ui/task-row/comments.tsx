@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Comment} from "@/shared/api";
 import {useDispatch} from "react-redux";
 import {addComment} from "@/entities/task/model/actionCreators.ts";
+import {Input} from "@/shared/ui/input";
 
 type CommentProps = {
   index_column: number;
@@ -10,16 +11,36 @@ type CommentProps = {
 
 const Comments = ({index_column, index_task, id, text, children } : CommentProps) => {
   const dispatch = useDispatch()
+  const [isReply, setIsReply] = useState(false)
+  const [inputValue, setInputValue] = useState('')
 
   return (
     <div style={{marginLeft: 20, borderLeft: '1px white solid', paddingLeft: 5}}>
-      <span>{text}</span>
+      <div>{text}</div>
       <button onClick={() => {
-        dispatch(addComment(id, 'text', index_task, index_column))
+        setIsReply(prev => !prev)
       }}
       >
-        Add comment
+        {isReply ? 'Cancel': 'Add comment'}
       </button>
+
+      {
+        isReply &&
+        <div>
+          <Input value={inputValue} placeholder={"Comment..."} onChange={setInputValue}/>
+          <button
+            onClick={() => {
+              if (!inputValue.trim()) return
+
+              setInputValue('')
+              setIsReply(false)
+              dispatch(addComment(id, inputValue, index_task, index_column))
+            }}
+          >
+            Send
+          </button>
+        </div>
+      }
 
       {
         children.length ?

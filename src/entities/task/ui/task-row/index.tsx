@@ -25,6 +25,8 @@ const TaskRow = ({droppableId, index}: TaskRowProps) => {
   const dispatch = useDispatch()
 
   const handleNewSubtask = (e, subtask) => {
+    if (!subtask.trim()) return
+
     if (e.key === 'Enter' || e.code === 'NumpadEnter') {
       dispatch(addSubtask(droppableId, index, subtask))
     }
