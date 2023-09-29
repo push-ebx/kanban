@@ -1,7 +1,7 @@
 import * as actionTypes from "./actionTypes.ts"
-import {ColumnAction} from "@/shared/api";
+import {ColumnAction, CommentAction, SubtaskAction} from "@/shared/api";
 
-export function dragTask(source, destination) {
+export const dragTask = (source, destination) => {
   const action: ColumnAction = {
     type: actionTypes.DRAG_TASK,
     source,
@@ -11,11 +11,68 @@ export function dragTask(source, destination) {
   return action
 }
 
-export function addTask(id, titleTask) {
+export const addTask = (id, titleTask, status) => {
   const action: ColumnAction = {
     type: actionTypes.ADD_TASK,
     id,
-    title: titleTask
+    titleTask,
+    status
+  }
+
+  return action
+}
+
+export const changePriorityTask = (id, indexTask, priority) => {
+  const action: ColumnAction = {
+    type: actionTypes.CHANGE_PRIORITY_TASK,
+    id,
+    indexTask,
+    priority
+  }
+
+  return action
+}
+
+export const changeTitleTask = (id, indexTask, titleTask) => {
+  const action: ColumnAction = {
+    type: actionTypes.CHANGE_TITLE_TASK,
+    id,
+    indexTask,
+    titleTask
+  }
+
+  return action
+}
+
+export const changeDescriptionTask = (id, indexTask, description) => {
+  const action: ColumnAction = {
+    type: actionTypes.CHANGE_DESCRIPTION_TASK,
+    id,
+    indexTask,
+    description
+  }
+
+  return action
+}
+
+export const addComment = (id, text, index_task, index_column) => {
+  const action: CommentAction = {
+    type: actionTypes.ADD_COMMENT,
+    id,
+    text,
+    index_task,
+    index_column
+  }
+
+  return action
+}
+
+export const addSubtask = (droppableId, index, subtask) => {
+  const action: SubtaskAction = {
+    type: actionTypes.ADD_SUBTASK,
+    droppableId,
+    index,
+    subtask
   }
 
   return action
