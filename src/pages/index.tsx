@@ -8,7 +8,8 @@ const Project = lazy(() => import("@/pages/project"));
 export const Routing = () => {
   return (
     <Routes>
-      <Route path="/" element={<ProjectsList />} />
+      {/*<Route path="/" element={<ProjectsList />} />*/}
+      <Route path="/" element={<Project />} />
       <Route path="/:project_id" element={<Project />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
