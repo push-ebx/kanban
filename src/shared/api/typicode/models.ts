@@ -48,10 +48,10 @@ export type CommentAction = {
 
 export type SubtaskAction = {
   type: string;
-  droppableId,
-  index,
-  subtask,
-  subtask_index: number
+  droppableId?,
+  index?,
+  subtask?,
+  subtask_index?: number
 }
 
 export type ColumnState = {
