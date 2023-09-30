@@ -1,8 +1,7 @@
-import {ColumnAction, ColumnState, Comment, CommentAction, SubtaskAction} from "@/shared/api";
+import {ColumnAction, ColumnState, CommentAction, SubtaskAction} from "@/shared/api";
 import * as actionTypes from "./actionTypes"
 import moment from "moment";
 
-const comment: Comment = { id: '', children: []}
 const loadState = () => {
   try {
     const serialState = localStorage.getItem('appState');
@@ -82,7 +81,7 @@ const taskReducer = (
       state.columns[id].list.push({
         titleTask,
         status,
-        id: state.count_tasks++,
+        id: ++state.count_tasks,
         description: '',
         date_create: moment().format("DD.MM.YY hh:mm a"),
         subtasks: [],
